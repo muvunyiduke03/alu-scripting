@@ -58,7 +58,7 @@ def number_of_subscribers(subreddit):
     }
 
     try:
-        # Send GET request without following redirects
+        # Send get request without following redirects
         response = requests.get(url, headers=headers, allow_redirects=False)
 
         # if the subreddit exists and data is returned
