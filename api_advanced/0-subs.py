@@ -21,7 +21,7 @@ Requirements:
 
 import requests
 
-def number_of_Subscribers(subreddit):
+def number_of_subscribers(subreddit):
     """
     Retrieve the total number of subscribers for a given subreddit.
 
