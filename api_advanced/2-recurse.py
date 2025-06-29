@@ -6,7 +6,7 @@ for a given subreddit.
 
 import requests
 
-def recurse(subreddit, hot_list=[], after=None):
+def recurse(subreddit, hot_list=None, after=None):
     """
     Recursively collects titles of hot articles for a subreddit.
 
@@ -18,6 +18,9 @@ def recurse(subreddit, hot_list=[], after=None):
     Returns:
         list: List of titles if subreddit is valid, None otherwise.
     """
+
+    if hot_list is None:
+        hot_list = []
 
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {
