@@ -5,7 +5,6 @@ for a given subreddit using the Reddit API.
 """
 
 import requests
-import sys
 
 def top_ten(subreddit):
     """
