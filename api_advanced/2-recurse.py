@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Recursively queries the Reddit API and returns a list of all hot article titles
-for a given subreddit.
+Recursively queries the Reddit API and returns a list of all hot article titles for a given subreddit.
 """
 
 import requests
