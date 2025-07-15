@@ -1,40 +1,30 @@
 #!/usr/bin/python3
 """
-Recursive function to count keywords in hot post titles of a subreddit
+1-main
 """
-
 import requests
 
-def count_word(subreddit, word_list, hot_list=[], after=None, word_count=None):
-    if word_count is None:
-        # Normalize word list to lowercase and sum duplicates
-        word_count = {}
-        for word in word_list:
-            key = word.lower()
-            word_count[key] = word_count.get(key, 0) + 0
 
-    headers = {'User-agent': 'python:keyword.counter:v1.0 (by /u/fakeuser)'}
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    params = {'limit': 100, 'after': after}
-
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
-
+def count_words(subreddit, word_list):
+    """
+    1-main
+    """
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    headers = {'User-Agent': 'cynt user agent 1.1'}
+    response = requests.get(url, headers=headers, allow_redirects=False)
     if response.status_code != 200:
-        return
-    
-    data = response.json().get('data', {})
-    posts = data.get('children', [])
-    after = data.get('after', None)
 
+        return None
+    posts = response.json().get('data').get('children')
+    word_count = {}
     for post in posts:
-        title = post['data']['title'].lower().split()
-        for word in word_count.keys():
-            word_count[word] += title.count(word)
+        title = post['data']['title']
+        for word in word_list:
+            if word.lower() in title.lower():
+                word_count[word.lower()] = word_count.get(word.lower(), 0) + 1
 
-    if after is not None:
-        return count_word(subreddit, word_list, hot_list, after, word_count)
-    
-    # print results
-    filtered = {k: v for k, v in word_count.items() if v > 0}
-    for word in sorted(filtered.items(), key=lambda x: (-x[1], x[0])):
-        print(f"{word[0]}: {word[1]}")
+    if not word_count:
+        return
+    for key, value in sorted(word_count.items(), key=lambda x: (-x[1], x[0])):
+        print("{}: {}".format(key.lower(), value))
+    return count_words(subreddit, word_list)
